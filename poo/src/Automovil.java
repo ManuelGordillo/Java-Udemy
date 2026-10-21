@@ -4,8 +4,10 @@ public class Automovil {
     private String fabricante;
     private String modelo;
     private Color color = Color.GRIS;
-    private double cilindrada;
-    private int capacidadEstanque = 40;
+    private Motor motor;
+    private Estanque estanque;
+    private Persona conductor;
+    private Rueda[] ruedas;
 
     private TipoAutomovil tipo;
 
@@ -22,13 +24,42 @@ public class Automovil {
     public static final String COLOR_BLANCO = "Blanco";
     public static final String COLOR_GRIS = "Gris Oscuro";
 
-    public Automovil(String fabricante, String modelo, Color color, double cilindrada, int capacidadEstanque) {
+    public Automovil(String fabricante, String modelo, Color color, Motor motor) {
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+        this.color = color;
+        this.motor = motor;
+    }
+
+    public Automovil(String fabricante, String modelo) {
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+    }
+
+    public Automovil(String fabricante, String modelo, Color color) {
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+        this.color = color;
+    }
+
+    public Automovil(String fabricante, String modelo, Color color, Motor motor, Estanque estanque) {
         this();
         this.fabricante = fabricante;
         this.modelo = modelo;
         this.color = color;
-        this.cilindrada = cilindrada;
-        this.capacidadEstanque = capacidadEstanque;
+        this.motor = motor;
+        this.estanque = estanque;
+    }
+
+    public Automovil(String fabricante, String modelo, Color color, Motor motor, Estanque estanque, Persona conductor, Rueda[] ruedas, TipoAutomovil tipo) {
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+        this.color = color;
+        this.motor = motor;
+        this.estanque = estanque;
+        this.conductor = conductor;
+        this.ruedas = ruedas;
+        this.tipo = tipo;
     }
 
     public int getId() {
@@ -84,20 +115,23 @@ public class Automovil {
         this.color = color;
     }
 
-    public double getCilindrada() {
-        return cilindrada;
+    public Estanque getEstanque() {
+        if(estanque == null){
+            this.estanque = new Estanque();
+        }
+        return estanque;
     }
 
-    public void setCilindrada(double cilindrada) {
-        this.cilindrada = cilindrada;
+    public void setEstanque(Estanque estanque) {
+        this.estanque = estanque;
     }
 
-    public int getCapacidadEstanque() {
-        return capacidadEstanque;
+    public Motor getMotor() {
+        return motor;
     }
 
-    public void setCapacidadEstanque(int capacidadEstanque) {
-        this.capacidadEstanque = capacidadEstanque;
+    public void setMotor(Motor motor) {
+        this.motor = motor;
     }
 
     public TipoAutomovil getTipo() {
@@ -109,13 +143,19 @@ public class Automovil {
     }
 
     public String verDetalle(){
-        return "Id: " + this.id +
+        String detalle = "Id: " + this.id +
                 "\nFabricante: " + this.fabricante +
-                "\nModelo: " + this.modelo +
-                "\nTipo: " + this.getTipo().getDescripcion() +
-                "\nColor: " + this.color +
-                "\nCilindrada: " + this.cilindrada +
-                "\nColor Patente: " + colorPatente;
+                "\nModelo: " + this.modelo ;
+        if (this.getTipo() != null){
+                detalle +="\nTipo: " + this.getTipo().getDescripcion() ;
+        }
+        detalle += "\nColor: " + this.color;
+        if (this.motor != null){
+            detalle +=  "\nCilindrada: " + this.motor.getCilindrada();
+        }
+
+        detalle +="\nColor Patente: " + colorPatente;
+        return detalle;
     }
 
     public String acelerar(int rpm){
@@ -132,11 +172,11 @@ public class Automovil {
     }
 
     public float calcularConsumo(int km, float porcentajeBencina){
-        return km / (capacidadEstanque*porcentajeBencina);
+        return km / (estanque.getCapacidad()*porcentajeBencina);
     }
 
     public float calcularConsumo(int km, int porcentajeBencina){
-        return km / (capacidadEstanque*(porcentajeBencina/100f));
+        return km / (this.getEstanque().getCapacidad()*(porcentajeBencina/100f));
     }
 
     public static float calcularConsumoEstatico(int km, int porcentajeBencina){
