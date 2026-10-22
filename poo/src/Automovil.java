@@ -7,7 +7,8 @@ public class Automovil {
     private Motor motor;
     private Estanque estanque;
     private Persona conductor;
-    private Rueda[] ruedas;
+    private Rueda[] ruedas = new Rueda[5];
+    private int indiceRuedas;
 
     private TipoAutomovil tipo;
 
@@ -23,6 +24,11 @@ public class Automovil {
     public static final String COLOR_AZUL = "Azul";
     public static final String COLOR_BLANCO = "Blanco";
     public static final String COLOR_GRIS = "Gris Oscuro";
+
+    public Automovil(){
+        this.id = ++ultimoId;
+        this.ruedas = new Rueda[5];
+    }
 
     public Automovil(String fabricante, String modelo, Color color, Motor motor) {
         this.fabricante = fabricante;
@@ -51,6 +57,16 @@ public class Automovil {
         this.estanque = estanque;
     }
 
+    public Automovil(String fabricante, String modelo, Color color, Motor motor, Estanque estanque, Persona conductor, Rueda[] ruedas) {
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+        this.color = color;
+        this.motor = motor;
+        this.estanque = estanque;
+        this.conductor = conductor;
+        this.ruedas = ruedas;
+    }
+
     public Automovil(String fabricante, String modelo, Color color, Motor motor, Estanque estanque, Persona conductor, Rueda[] ruedas, TipoAutomovil tipo) {
         this.fabricante = fabricante;
         this.modelo = modelo;
@@ -62,6 +78,14 @@ public class Automovil {
         this.tipo = tipo;
     }
 
+    public Rueda[] getRuedas() {
+        return ruedas;
+    }
+
+    public void setRuedas(Rueda[] ruedas) {
+        this.ruedas = ruedas;
+    }
+
     public int getId() {
         return id;
     }
@@ -70,12 +94,12 @@ public class Automovil {
         this.id = id;
     }
 
-    public Automovil(){
-        this.id = ++ultimoId;
-    }
-
     public static int getCapacidadEstanqueEstatico() {
         return capacidadEstanqueEstatico;
+    }
+
+    public void addRueda(Rueda rueda){
+        this.ruedas[indiceRuedas++] = rueda;
     }
 
     public static void setCapacidadEstanqueEstatico(int capacidadEstanqueEstatico) {
@@ -142,6 +166,14 @@ public class Automovil {
         this.tipo = tipo;
     }
 
+    public Persona getConductor() {
+        return conductor;
+    }
+
+    public void setConductor(Persona conductor) {
+        this.conductor = conductor;
+    }
+
     public String verDetalle(){
         String detalle = "Id: " + this.id +
                 "\nFabricante: " + this.fabricante +
@@ -154,7 +186,14 @@ public class Automovil {
             detalle +=  "\nCilindrada: " + this.motor.getCilindrada();
         }
 
-        detalle +="\nColor Patente: " + colorPatente;
+        detalle +="\nColor Patente: " + colorPatente +
+                "\nConductor Subaru: " + this.getConductor();
+        if (getRuedas() != null){
+            detalle += "\nRuedas del Automovil: ";
+            for(Rueda r: this.getRuedas()){
+                detalle += "\n" + r.getFabricante() + ", aro: " + r.getAro() + ", ancho: " + r.getAncho();
+            }
+        }
         return detalle;
     }
 
