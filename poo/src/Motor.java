@@ -2,12 +2,12 @@ public class Motor {
     private double cilindrada;
     private TipoMotor tipo;
 
+    public Motor() {
+    }
+
     public Motor(double cilindrada, TipoMotor tipo) {
         this.cilindrada = cilindrada;
         this.tipo = tipo;
-    }
-
-    public Motor() {
     }
 
     public double getCilindrada() {

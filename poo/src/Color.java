@@ -4,9 +4,9 @@ public enum Color {
     AZUL("Azul"),
     BLANCO("Blanco"),
     GRIS("Gris Oscuro"),
-    NARANJO("Naranjo");
+    NARANJO("Naranja");
 
-    private final  String color;
+    private final String color;
 
     Color(String color) {
         this.color = color;
