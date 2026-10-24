@@ -1,23 +1,24 @@
 import java.util.Date;
 
 public class OrdenCompra {
-    private int id;
+
+    private int identificador;
     private String descripcion;
     private Date fecha;
     private Cliente cliente;
     private Producto[] productos;
-    private static int ultimoId;
 
-    public OrdenCompra() {
-        this.id = ++ultimoId;
-    }
+    private static int ultimoId;
+    private int indiceProductos;
 
     public OrdenCompra(String descripcion) {
         this.descripcion = descripcion;
+        this.identificador = ++ultimoId;
+        this.productos = new Producto[4];
     }
 
-    public int getId() {
-        return id;
+    public int getIdentificador() {
+        return identificador;
     }
 
     public String getDescripcion() {
@@ -28,25 +29,34 @@ public class OrdenCompra {
         return fecha;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public Producto[] getProductos() {
-        return productos;
-    }
-
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    public void addProducto(Producto producto){}
-
-    public static int granTotal(int precio){
-        return precio += precio;
+    public Producto[] getProductos() {
+        return productos;
     }
+
+    public void addProducto(Producto producto) {
+        if (indiceProductos < this.productos.length) {
+            this.productos[indiceProductos++] = producto;
+        }
+    }
+
+    public int getGranTotal(){
+        int total = 0;
+        for(Producto p: productos){
+            total += p.getPrecio();
+        }
+        return total;
+    }
+
 }
