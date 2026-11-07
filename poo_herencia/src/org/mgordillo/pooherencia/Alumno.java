@@ -6,6 +6,29 @@ public class Alumno extends Persona{
     private double notaCastellano;
     private double notaHistoria;
 
+    public Alumno() {
+        System.out.println("Alumno: Inicializando constructor");
+    }
+
+    public Alumno(String nombre, String apellido){
+        super(nombre, apellido);
+    }
+
+    public Alumno(String nombre, String apellido,int edad){
+        super(nombre,apellido,edad);
+    }
+
+    public Alumno(String nombre, String apellido, int edad, String institucion){
+        super(nombre, apellido, edad);
+        this.institucion = institucion;
+    }
+
+    public Alumno(String nombre, String apellido, int edad, String institucion, double notaCastellano, double notaHistoria,double notaMatematica ){
+        this(nombre,apellido,edad,institucion);
+        this.notaCastellano = notaCastellano;
+        this.notaHistoria = notaHistoria;
+        this.notaMatematica = notaMatematica;
+    }
 
     public String getInstitucion() {
         return institucion;
